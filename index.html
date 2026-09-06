@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webinar Spesial Mahir Digital</title>
+<style>
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        color: #333333;
+        line-height: 1.4;
+        font-size: 13px;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f6f8;
+    }
+    .page-wrapper {
+        max-width: 640px;
+        margin: 0 auto;
+        background: #ffffff;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        min-height: 100vh;
+    }
+    
+    /* Poster Gambar Murni Tanpa Layar Hitam */
+    .poster-container {
+        width: 100%;
+        background: #ffffff;
+        text-align: center;
+        line-height: 0;
+    }
+    .poster-container img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    
+    .content-body {
+        padding: 20px 15px;
+    }
+    
+    .section-title-center {
+        text-align: center;
+        font-weight: bold;
+        color: #1e3c72;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    
+    ol {
+        margin: 0 0 15px 0;
+        padding-left: 20px;
+        font-size: 12px;
+        color: #475569;
+    }
+    ol li {
+        margin-bottom: 4px;
+    }
+
+    .sub-heading {
+        text-align: center;
+        font-weight: bold;
+        color: #0284c7;
+        font-size: 13px;
+        margin: 15px 0 8px 0;
+    }
+
+    .bonus-text {
+        text-align: center;
+        font-size: 12px;
+        color: #b45309;
+        font-weight: bold;
+        margin: 10px 0;
+        background: #fffbeb;
+        padding: 6px;
+        border-radius: 4px;
+        border: 1px dashed #f59e0b;
+    }
+
+    .schedule-info {
+        text-align: center;
+        font-size: 12px;
+        color: #334155;
+        margin: 15px 0;
+        line-height: 1.6;
+    }
+
+    .price-section {
+        text-align: center;
+        margin: 20px 0;
+    }
+    .price-title {
+        font-size: 13px;
+        font-weight: bold;
+        color: #1e3c72;
+    }
+    .price-old {
+        text-decoration: line-through;
+        color: #dc2626;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .price-new {
+        font-size: 24px;
+        font-weight: bold;
+        color: #1e293b;
+        margin: 2px 0;
+    }
+    .promo-desc {
+        font-size: 11.5px;
+        color: #475569;
+    }
+
+    .cta-heading {
+        text-align: center;
+        font-weight: bold;
+        font-size: 13.5px;
+        color: #1e3c72;
+        margin-top: 25px;
+    }
+    .cta-sub {
+        text-align: center;
+        font-weight: bold;
+        font-size: 12px;
+        color: #dc2626;
+        margin-bottom: 15px;
+    }
+
+    /* Checkout Layout */
+    .checkout-box {
+        display: flex;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        background: #ffffff;
+        margin-top: 10px;
+    }
+    .form-pane {
+        flex: 1.2;
+        padding: 12px;
+        border-right: 1px solid #cbd5e1;
+    }
+    .summary-pane {
+        flex: 1;
+        padding: 12px;
+        background: #f8fafc;
+    }
+
+    @media (max-width: 600px) {
+        .checkout-box {
+            flex-direction: column;
+        }
+        .form-pane {
+            border-right: none;
+            border-bottom: 1px solid #cbd5e1;
+        }
+    }
+
+    .field-label {
+        font-size: 11px;
+        font-weight: bold;
+        color: #334155;
+        margin-bottom: 3px;
+        display: block;
+    }
+    .field-input {
+        width: 100%;
+        padding: 6px 8px;
+        border: 1px solid #cbd5e1;
+        border-radius: 3px;
+        font-size: 11px;
+        background: #ffffff;
+        color: #94a3b8;
+        margin-bottom: 10px;
+    }
+
+    .summary-title {
+        font-weight: bold;
+        font-size: 11.5px;
+        color: #1e3c72;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 4px;
+    }
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        margin-bottom: 5px;
+        color: #475569;
+    }
+    .summary-total {
+        border-top: 1px solid #cbd5e1;
+        padding-top: 5px;
+        margin-top: 5px;
+        font-weight: bold;
+        color: #000;
+    }
+
+    .coupon-container {
+        margin-top: 10px;
+    }
+    .coupon-label {
+        font-size: 10.5px;
+        font-weight: bold;
+        color: #334155;
+        margin-bottom: 3px;
+        display: block;
+    }
+    .coupon-row {
+        display: flex;
+        gap: 4px;
+    }
+    .coupon-field {
+        flex: 1;
+        padding: 5px 6px;
+        border: 1px solid #cbd5e1;
+        border-radius: 3px;
+        font-size: 10px;
+        color: #94a3b8;
+    }
+    .coupon-btn {
+        padding: 5px 10px;
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 3px;
+        font-size: 10px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .payment-section {
+        margin-top: 10px;
+    }
+    .payment-label {
+        font-size: 10.5px;
+        font-weight: bold;
+        color: #334155;
+        margin-bottom: 3px;
+        display: block;
+    }
+    .payment-option {
+        padding: 6px 8px;
+        border: 1px solid #cbd5e1;
+        border-radius: 3px;
+        background: #ffffff;
+        font-size: 11px;
+        font-weight: bold;
+        color: #1e3c72;
+    }
+
+    .submit-btn {
+        width: 100%;
+        background: #2563eb;
+        color: #ffffff;
+        border: none;
+        padding: 10px;
+        font-weight: bold;
+        font-size: 12px;
+        border-radius: 3px;
+        cursor: pointer;
+        text-align: center;
+        margin-top: 15px;
+    }
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <!-- Poster Gambar Murni -->
+    <div class="poster-container">
+        <img src="https://lh3.googleusercontent.com/d/1lx9fzP_eTpZT0zgonxr9OY1FoFuz2Twl" alt="Poster Webinar" style="width: 100%; height: auto; display: block;">
+    </div>
+
+    <div class="content-body">
+        <div class="section-title-center">WEBINAR INI KHUSUS UNTUK :</div>
+        <ol>
+            <li>Siapapun yang mau mulai jualan online tanpa stok produk.</li>
+            <li>Siapapun yang mau dapat penghasilan tambahan dari jualan online.</li>
+            <li>Buat Anda yang sudah pernah beriklan tapi belum ada hasil / boncos.</li>
+        </ol>
+
+        <div class="sub-heading">Apa Materinya?</div>
+        <div style="text-align: center; font-weight: bold; font-size: 12px; margin-bottom: 6px; color: #334155;">Langkah-langkah mulai bisnis online untuk pemula</div>
+        
+        <ol style="list-style-type: decimal;">
+            <li>Fundamental, mindset & strategi dropship</li>
+            <li>Mencari supplier + riset produk (dropship)</li>
+            <li>Bocoran Produk Winning (terjual +10.000 pcs)</li>
+            <li>Praktek Beriklan produk dropship di FB & IG</li>
+            <li>Kolaborasi Digital Marketing yang trending di 2025</li>
+        </ol>
+
+        <div class="bonus-text">
+            <strong>BONUS :</strong><br>
+            Bedah Dashboard & Strategi Closing +10.000 pcs / Bulan.
+        </div>
+
+        <div class="schedule-info">
+            <strong style="background-color: rgb(255, 255, 0);">Kapan Webinarnya ?</strong><br>
+            Hari : Minggu, 13 September 2026<br>
+            Waktu : 19.30 - 22.00 (WIB)<br>
+            Online Lewat Zoom Meeting
+        </div>
+
+        <div class="price-section">
+            <div class="price-title">HARGA KHUSUS</div>
+            <div class="price-old">Rp 150.000</div>
+            <div class="price-new">Rp 35.000</div>
+            <div class="promo-desc">Promo 35 Ribu Khusus pendaftaran Hari ini 😁</div>
+        </div>
+
+        <div class="cta-heading">Daftar Webinar Online Sekarang!!</div>
+        <div class="cta-sub">Sebelum Promo 35 Ribu Di Tutup! (KUOTA TERBATAS)</div>
+        <div style="text-align: center; font-weight: bold; font-size: 11.5px; color: #1e3c72; margin-bottom: 10px;">BURUAN DAFTAR DIBAWAH INI !!!</div>
+
+        <!-- Form & Ringkasan Checkout -->
+        <div class="checkout-box">
+            <div class="form-pane">
+                <span class="field-label">Silahkan Lengkapi Data Dibawah Ini</span>
+                
+                <label class="field-label">Nama Lengkap *</label>
+                <input type="text" class="field-input" value="Masukkan nama lengkap" readonly>
+
+                <label class="field-label">Alamat Email *</label>
+                <input type="text" class="field-input" value="Masukkan alamat email" readonly>
+
+                <label class="field-label">No. Whatsapp *</label>
+                <input type="text" class="field-input" value="Masukkan nomor whatsapp" readonly>
+            </div>
+
+            <div class="summary-pane">
+                <div class="summary-title">Pesanan Kamu</div>
+                
+                <div class="summary-row">
+                    <span>WEBINAR UMUM #3 x 1</span>
+                    <span style="text-decoration: line-through; color: #94a3b8;">Rp 150.000</span>
+                </div>
+                <div class="summary-row" style="font-weight: bold; color: #000;">
+                    <span></span>
+                    <span>Rp 35.000</span>
+                </div>
+
+                <div class="summary-row" style="margin-top: 8px;">
+                    <span>Subtotal</span>
+                    <span>Rp 35.000</span>
+                </div>
+                
+                <div class="summary-row summary-total">
+                    <span>Total</span>
+                    <span>Rp 35.000</span>
+                </div>
+
+                <div class="coupon-container">
+                    <span class="coupon-label">Kode Kupon (Jika ada)</span>
+                    <div class="coupon-row">
+                        <input type="text" class="coupon-field" value="Masukkan kode kupon [min.5 karakter]" readonly>
+                        <button type="button" class="coupon-btn">Terapkan</button>
+                    </div>
+                </div>
+
+                <div class="payment-section">
+                    <span class="payment-label">Pilih Pembayaran</span>
+                    <div class="payment-option">Bank Transfer - BCA</div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="submit-btn">Buat Pesanan Rp 35.000</button>
+    </div>
+</div>
+
+</body>
+</html>
