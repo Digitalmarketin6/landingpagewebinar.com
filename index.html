@@ -813,27 +813,10 @@ src="https://www.facebook.com/tr?id=1360724366215482&ev=PageView&noscript=1"
         }, 10);
         start24HourTimer();
     });
- function closeQris() {
-        qrisOverlay.classList.remove('show');
-        setTimeout(() => {
-            qrisOverlay.style.display = 'none';
-        }, 300);
-        clearInterval(countdownInterval);
-        
-        // Menampilkan pesan pop-up (alert) untuk mengingatkan peserta cek email
-        alert("Silakan cek email Anda (termasuk folder Spam/Promosi) untuk tautan bergabung ke Grup WEBINAR!");
-    }
+ 
 
-    closeQrisModal.addEventListener('click', closeQris);
-
-    qrisOverlay.addEventListener('click', function (e) {
-        if (e.target === qrisOverlay) {
-            closeQris();
-        }
-    });
-
-    function closeQris() {
-        // Ambil data dari form website
+  function closeQris() {
+        // 1. Ambil data dari form website
         const formData = {
             name: document.getElementById('inputName').value.trim(),
             email: document.getElementById('inputEmail').value.trim(),
@@ -842,10 +825,10 @@ src="https://www.facebook.com/tr?id=1360724366215482&ev=PageView&noscript=1"
             invoice: invoiceNum
         };
 
-        // URL Web App Google Apps Script Anda
+        // 2. URL Web App Google Apps Script Anda
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxf5pTQQ2JtIcKeMsXCcD_n9Avcl1bjaG5xQD3l87C0VFlZualDLIJ_DrRFy0snrmOwyg/exec';
 
-        // Kirim data secara otomatis ke Google Spreadsheet & Email
+        // 3. Kirim data secara otomatis ke Google Spreadsheet & Email
         fetch(scriptURL, {
             method: 'POST',
             mode: 'no-cors',
@@ -857,13 +840,27 @@ src="https://www.facebook.com/tr?id=1360724366215482&ev=PageView&noscript=1"
         })
         .catch(error => console.error('Error!', error.message));
 
-        // Tutup modal seperti biasa
+        // 4. Tutup modal QRIS
         qrisOverlay.classList.remove('show');
         setTimeout(() => {
             qrisOverlay.style.display = 'none';
         }, 300);
         clearInterval(countdownInterval);
+        
+        // 5. Tampilkan alert pemberitahuan cek email (diberi jeda sedikit agar mulus tertutup dulu)
+        setTimeout(function() {
+            alert("Silakan cek email Anda (termasuk folder Spam/Promosi) untuk tautan bergabung ke Grup WEBINAR!");
+        }, 400);
     }
+
+    // Event listener untuk tombol tutup dan klik di luar modal
+    closeQrisModal.addEventListener('click', closeQris);
+
+    qrisOverlay.addEventListener('click', function (e) {
+        if (e.target === qrisOverlay) {
+            closeQris();
+        }
+    });
 </script>
 
 </body>
