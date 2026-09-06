@@ -1,6 +1,33 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+      <!-- Meta Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!n._abs)n.l=1;n.t=+new Date;t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1360724366215482');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1360724366215482&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+
+
+<script>
+  fbq('track', 'ViewContent', {
+    value: 35000,
+    currency: 'IDR',
+    content_ids: 'WEBINAR01',
+  });
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Webinar Spesial Mahir Digital</title>
@@ -590,7 +617,7 @@
 
             <div class="nominal-box">
                 <div style="font-size: 11px; color: #1e3c72; font-weight: bold;">TOTAL YANG HARUS DIBAYAR</div>
-                <div id="displayNominal" class="nominal-value">Rp 35.610</div>
+                <div id="displayNominal" class="nominal-value">Rp 35.000</div>
                 <button type="button" id="copyNominalBtn" class="copy-nominal-btn">Salin nominal</button>
             </div>
 
@@ -614,7 +641,7 @@
             <button type="button" id="showQrisModalBtn" class="qris-toggle-btn">Lihat Barcode QRIS</button>
 
             <div style="font-size: 11.5px; color: #334155; margin-top: 15px; text-align: center; line-height: 1.5;">
-                Silahkan transfer senilai <strong id="subTotalText">Rp 35.610</strong> ke Qris.<br>
+                Silahkan transfer senilai <strong id="subTotalText">Rp 35.000</strong> ke Qris.<br>
                 Setelah transfer, Kamu bisa langsung konfirmasi melalui Whatsapp Admin, untuk bisa dilakukan verifikasi pembayaran agar bisa masuk ke Website Mahir Digital.
             </div>
 
@@ -654,7 +681,7 @@
             <img src="https://lh3.googleusercontent.com/d/1P9oU4uHBHX21gWv7qiQoqxa76QrG0bG9=s800" alt="QRIS Code" class="qris-image">
         </div>
         
-        <p style="font-size: 11px; color: #dc2626; font-weight: bold; margin: 5px 0;">Nominal: <span id="modalNominalText">Rp 35.610</span></p>
+        <p style="font-size: 11px; color: #dc2626; font-weight: bold; margin: 5px 0;">Nominal: <span id="modalNominalText">Rp 35.000</span></p>
 
         <button type="button" id="closeQrisModal" class="close-modal">Tutup QRIS</button>
     </div>
@@ -682,7 +709,7 @@
     const deadline24hText = document.getElementById('deadline24hText');
     const countdown24h = document.getElementById('countdown24h');
 
-    const finalAmount = "Rp 35.610";
+    const finalAmount = "Rp 35.000";
     const invoiceNum = "#ORD-1788660710876-376";
 
     let countdownInterval;
@@ -771,7 +798,7 @@
     });
 
     copyNominalBtn.addEventListener('click', function () {
-        navigator.clipboard.writeText("35610").then(() => {
+        navigator.clipboard.writeText("35000").then(() => {
             copyNominalBtn.textContent = "Berhasil Disalin!";
             setTimeout(() => {
                 copyNominalBtn.textContent = "Salin nominal";
