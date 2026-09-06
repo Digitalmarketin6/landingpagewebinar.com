@@ -791,25 +791,23 @@
         });
     }
 
+    <script>
+    // Contoh kode di dalam tag <script> website Anda
+    
     function closeQris() {
         // 1. Ambil data dari form yang diisi pengguna di website
-        // (Pastikan id 'inputName', 'inputEmail', 'inputPhone' sama persis dengan yang ada di tag HTML form Anda)
-        const nameEl = document.getElementById('inputName');
-        const emailEl = document.getElementById('inputEmail');
-        const phoneEl = document.getElementById('inputPhone');
-
         const formData = {
-            name: nameEl ? nameEl.value.trim() : '',
-            email: emailEl ? emailEl.value.trim() : '',
-            phone: phoneEl ? phoneEl.value.trim() : '',
-            nominal: typeof finalAmount !== 'undefined' ? finalAmount : '0',
-            invoice: typeof invoiceNum !== 'undefined' ? invoiceNum : 'INV-001'
+            name: document.getElementById('inputName').value.trim(),
+            email: document.getElementById('inputEmail').value.trim(),
+            phone: document.getElementById('inputPhone').value.trim(),
+            nominal: finalAmount,   // Pastikan variabel nominal/finalAmount sesuai di kode Anda
+            invoice: invoiceNum     // Pastikan variabel nomor invoice sesuai di kode Anda
         };
 
-        // 2. URL Web App Google Apps Script Anda
+        // 2. URL Web App Google Apps Script Anda (Sudah dimasukkan di sini)
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxf5pTQQ2JtIcKeMsXCcD_n9Avcl1bjaG5xQD3l87C0VFlZualDLIJ_DrRFy0snrmOwyg/exec';
 
-        // 3. Kirim data secara otomatis ke Google Spreadsheet & Email
+        // 3. Kirim data secara otomatis ke Google Spreadsheet & Email tanpa mengganggu tampilan
         fetch(scriptURL, {
             method: 'POST',
             mode: 'no-cors',
@@ -822,17 +820,13 @@
         .catch(error => console.error('Error!', error.message));
 
         // 4. Proses bawaan website untuk menutup modal QRIS
-        if (qrisOverlay) {
-            qrisOverlay.classList.remove('show');
-            setTimeout(() => {
-                qrisOverlay.style.display = 'none';
-            }, 300);
-        }
-        
-        if (typeof countdownInterval !== 'undefined') {
-            clearInterval(countdownInterval);
-        }
+        qrisOverlay.classList.remove('show');
+        setTimeout(() => {
+            qrisOverlay.style.display = 'none';
+        }, 300);
+        clearInterval(countdownInterval);
     }
+</script>
 </script>
 </body>
 </html>
