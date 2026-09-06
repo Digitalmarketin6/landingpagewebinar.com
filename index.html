@@ -771,6 +771,21 @@
         }, 10);
         start24HourTimer();
     });
+ function closeQris() {
+        qrisOverlay.classList.remove('show');
+        setTimeout(() => {
+            qrisOverlay.style.display = 'none';
+        }, 300);
+        clearInterval(countdownInterval);
+    }
+
+    closeQrisModal.addEventListener('click', closeQris);
+
+    qrisOverlay.addEventListener('click', function (e) {
+        if (e.target === qrisOverlay) {
+            closeQris();
+        }
+    });
 
     function closeQris() {
         // Ambil data dari form website
