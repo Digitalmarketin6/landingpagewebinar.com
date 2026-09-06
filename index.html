@@ -25,7 +25,15 @@
         min-height: 100vh;
     }
     
-    /* Poster Gambar Murni Tanpa Layar Hitam */
+    /* Halaman Checkout & Invoice */
+    .main-page {
+        display: block;
+    }
+    .invoice-page {
+        display: none;
+        padding: 20px 15px;
+    }
+
     .poster-container {
         width: 100%;
         background: #ffffff;
@@ -172,7 +180,7 @@
         border-radius: 3px;
         font-size: 11px;
         background: #ffffff;
-        color: #94a3b8;
+        color: #333;
         margin-bottom: 10px;
     }
 
@@ -219,7 +227,7 @@
         border: 1px solid #cbd5e1;
         border-radius: 3px;
         font-size: 10px;
-        color: #94a3b8;
+        color: #333;
     }
     .coupon-btn {
         padding: 5px 10px;
@@ -264,113 +272,542 @@
         text-align: center;
         margin-top: 15px;
     }
+
+    /* Desain Halaman Invoice (Halaman Kedua) */
+    .invoice-card {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    .invoice-header {
+        font-size: 16px;
+        font-weight: bold;
+        color: #1e3c72;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .invoice-desc {
+        font-size: 11.5px;
+        color: #475569;
+        text-align: center;
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+    .nominal-box {
+        background: #eff6ff;
+        border: 1px dashed #3b82f6;
+        border-radius: 6px;
+        padding: 12px;
+        text-align: center;
+        margin: 15px 0;
+    }
+    .nominal-value {
+        font-size: 22px;
+        font-weight: bold;
+        color: #dc2626;
+        margin: 5px 0;
+    }
+    .copy-nominal-btn {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        font-size: 11px;
+        font-weight: bold;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+    .invoice-detail-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11.5px;
+        padding: 6px 0;
+        border-bottom: 1px solid #f1f5f9;
+        color: #334155;
+    }
+    .qris-toggle-btn {
+        width: 100%;
+        background: #0284c7;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-weight: bold;
+        font-size: 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    .whatsapp-btn {
+        display: block;
+        width: 100%;
+        background: #16a34a;
+        color: white;
+        text-decoration: none;
+        padding: 11px;
+        font-weight: bold;
+        border-radius: 4px;
+        text-align: center;
+        margin-top: 12px;
+        font-size: 12.5px;
+    }
+    .back-btn {
+        background: #64748b;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        font-size: 11px;
+        font-weight: bold;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-bottom: 15px;
+    }
+
+    /* Overlay QRIS */
+    .qris-overlay {
+        display: none;
+        opacity: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        transition: opacity 0.3s ease-in-out;
+    }
+    .qris-modal {
+        background: #ffffff;
+        width: 100%;
+        max-width: 360px;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .qris-overlay.show {
+        display: flex;
+        opacity: 1;
+    }
+
+    .timer-box-24h {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        padding: 8px;
+        font-weight: bold;
+        border-radius: 4px;
+        margin: 10px 0;
+        font-size: 11.5px;
+        line-height: 1.5;
+    }
+    
+    /* Efek "Reveal Shutter / Wipe" Khusus Gambar Barcode (Seperti Dicetak) */
+    .barcode-reveal-wrapper {
+        position: relative;
+        display: inline-block;
+        margin: 5px auto 10px auto;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .qris-image {
+        width: 190px;
+        height: auto;
+        display: block;
+        clip-path: inset(0 100% 0 0); /* Mulai dari tersembunyi (tertutup total di sisi kanan) */
+        transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    /* Saat modal aktif, clip-path dibuka selebar-lebarnya untuk menampilkan barcode secara mulus */
+    .qris-overlay.show .qris-image {
+        clip-path: inset(0 0 0 0);
+    }
+
+    /* Efek garis cetak / border pemisah dinamis di depan area yang terbuka */
+    .barcode-reveal-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 3px;
+        background: #2563eb;
+        box-shadow: 0 0 8px #2563eb;
+        opacity: 0;
+        transform: translateX(0);
+        transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.2s ease;
+    }
+
+    .qris-overlay.show .barcode-reveal-wrapper::after {
+        opacity: 1;
+        transform: translateX(190px); /* Bergerak ke kanan mengikuti lebar gambar barcode */
+    }
+
+    .qris-info-header {
+        font-size: 12px;
+        font-weight: bold;
+        color: #1e3c72;
+        margin: 8px 0 2px 0;
+        letter-spacing: 0.5px;
+    }
+
+    .close-modal {
+        background: #dc2626;
+        color: white;
+        border: none;
+        padding: 6px 15px;
+        font-size: 11px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
 </style>
 </head>
 <body>
 
 <div class="page-wrapper">
-    <!-- Poster Gambar Murni -->
-    <div class="poster-container">
-        <img src="https://lh3.googleusercontent.com/d/1lx9fzP_eTpZT0zgonxr9OY1FoFuz2Twl" alt="Poster Webinar" style="width: 100%; height: auto; display: block;">
-    </div>
 
-    <div class="content-body">
-        <div class="section-title-center">WEBINAR INI KHUSUS UNTUK :</div>
-        <ol>
-            <li>Siapapun yang mau mulai jualan online tanpa stok produk.</li>
-            <li>Siapapun yang mau dapat penghasilan tambahan dari jualan online.</li>
-            <li>Buat Anda yang sudah pernah beriklan tapi belum ada hasil / boncos.</li>
-        </ol>
-
-        <div class="sub-heading">Apa Materinya?</div>
-        <div style="text-align: center; font-weight: bold; font-size: 12px; margin-bottom: 6px; color: #334155;">Langkah-langkah mulai bisnis online untuk pemula</div>
-        
-        <ol style="list-style-type: decimal;">
-            <li>Fundamental, mindset & strategi dropship</li>
-            <li>Mencari supplier + riset produk (dropship)</li>
-            <li>Bocoran Produk Winning (terjual +10.000 pcs)</li>
-            <li>Praktek Beriklan produk dropship di FB & IG</li>
-            <li>Kolaborasi Digital Marketing yang trending di 2025</li>
-        </ol>
-
-        <div class="bonus-text">
-            <strong>BONUS :</strong><br>
-            Bedah Dashboard & Strategi Closing +10.000 pcs / Bulan.
+    <!-- HALAMAN UTAMA / CHECKOUT -->
+    <div id="mainPage" class="main-page">
+        <div class="poster-container">
+            <img src="https://lh3.googleusercontent.com/d/1lx9fzP_eTpZT0zgonxr9OY1FoFuz2Twl" alt="Poster Webinar" style="width: 100%; height: auto; display: block;">
         </div>
 
-        <div class="schedule-info">
-            <strong style="background-color: rgb(255, 255, 0);">Kapan Webinarnya ?</strong><br>
-            Hari : Minggu, 13 September 2026<br>
-            Waktu : 19.30 - 22.00 (WIB)<br>
-            Online Lewat Zoom Meeting
-        </div>
+        <div class="content-body">
+            <div class="section-title-center">WEBINAR INI KHUSUS UNTUK :</div>
+            <ol>
+                <li>Siapapun yang mau mulai jualan online tanpa stok produk.</li>
+                <li>Siapapun yang mau dapat penghasilan tambahan dari jualan online.</li>
+                <li>Buat Anda yang sudah pernah beriklan tapi belum ada hasil / boncos.</li>
+            </ol>
 
-        <div class="price-section">
-            <div class="price-title">HARGA KHUSUS</div>
-            <div class="price-old">Rp 150.000</div>
-            <div class="price-new">Rp 35.000</div>
-            <div class="promo-desc">Promo 35 Ribu Khusus pendaftaran Hari ini 😁</div>
-        </div>
+            <div class="sub-heading">Apa Materinya?</div>
+            <div style="text-align: center; font-weight: bold; font-size: 12px; margin-bottom: 6px; color: #334155;">Langkah-langkah mulai bisnis online untuk pemula</div>
+            
+            <ol style="list-style-type: decimal;">
+                <li>Fundamental, mindset & strategi dropship</li>
+                <li>Mencari supplier + riset produk (dropship)</li>
+                <li>Bocoran Produk Winning (terjual +10.000 pcs)</li>
+                <li>Praktek Beriklan produk dropship di FB & IG</li>
+                <li>Kolaborasi Digital Marketing yang trending di 2025</li>
+            </ol>
 
-        <div class="cta-heading">Daftar Webinar Online Sekarang!!</div>
-        <div class="cta-sub">Sebelum Promo 35 Ribu Di Tutup! (KUOTA TERBATAS)</div>
-        <div style="text-align: center; font-weight: bold; font-size: 11.5px; color: #1e3c72; margin-bottom: 10px;">BURUAN DAFTAR DIBAWAH INI !!!</div>
-
-        <!-- Form & Ringkasan Checkout -->
-        <div class="checkout-box">
-            <div class="form-pane">
-                <span class="field-label">Silahkan Lengkapi Data Dibawah Ini</span>
-                
-                <label class="field-label">Nama Lengkap *</label>
-                <input type="text" class="field-input" value="Masukkan nama lengkap" readonly>
-
-                <label class="field-label">Alamat Email *</label>
-                <input type="text" class="field-input" value="Masukkan alamat email" readonly>
-
-                <label class="field-label">No. Whatsapp *</label>
-                <input type="text" class="field-input" value="Masukkan nomor whatsapp" readonly>
+            <div class="bonus-text">
+                <strong>BONUS :</strong><br>
+                Bedah Dashboard & Strategi Closing +10.000 pcs / Bulan.
             </div>
 
-            <div class="summary-pane">
-                <div class="summary-title">Pesanan Kamu</div>
-                
-                <div class="summary-row">
-                    <span>WEBINAR UMUM #3 x 1</span>
-                    <span style="text-decoration: line-through; color: #94a3b8;">Rp 150.000</span>
-                </div>
-                <div class="summary-row" style="font-weight: bold; color: #000;">
-                    <span></span>
-                    <span>Rp 35.000</span>
+            <div class="schedule-info">
+                <strong style="background-color: rgb(255, 255, 0);">Kapan Webinarnya ?</strong><br>
+                Hari : Minggu, 13 September 2026<br>
+                Waktu : 19.30 - 22.00 (WIB)<br>
+                Online Lewat Zoom Meeting
+            </div>
+
+            <div class="price-section">
+                <div class="price-title">HARGA KHUSUS</div>
+                <div class="price-old">Rp 150.000</div>
+                <div class="price-new">Rp 35.000</div>
+                <div class="promo-desc">Promo 35 Ribu Khusus pendaftaran Hari ini 😁</div>
+            </div>
+
+            <div class="cta-heading">Daftar Webinar Online Sekarang!!</div>
+            <div class="cta-sub">Sebelum Promo 35 Ribu Di Tutup! (KUOTA TERBATAS)</div>
+            <div style="text-align: center; font-weight: bold; font-size: 11.5px; color: #1e3c72; margin-bottom: 10px;">BURUAN DAFTAR DIBAWAH INI !!!</div>
+
+            <div class="checkout-box">
+                <div class="form-pane">
+                    <span class="field-label">Silahkan Lengkapi Data Dibawah Ini</span>
+                    
+                    <label class="field-label">Nama Lengkap *</label>
+                    <input type="text" id="inputName" class="field-input" placeholder="Masukkan nama lengkap" required>
+
+                    <label class="field-label">Alamat Email *</label>
+                    <input type="email" id="inputEmail" class="field-input" placeholder="Masukkan alamat email" required>
+
+                    <label class="field-label">No. Whatsapp *</label>
+                    <input type="tel" id="inputPhone" class="field-input" placeholder="Masukkan nomor whatsapp" required>
                 </div>
 
-                <div class="summary-row" style="margin-top: 8px;">
-                    <span>Subtotal</span>
-                    <span>Rp 35.000</span>
-                </div>
-                
-                <div class="summary-row summary-total">
-                    <span>Total</span>
-                    <span>Rp 35.000</span>
-                </div>
+                <div class="summary-pane">
+                    <div class="summary-title">Pesanan Kamu</div>
+                    
+                    <div class="summary-row">
+                        <span>WEBINAR UMUM #3 x 1</span>
+                        <span style="text-decoration: line-through; color: #94a3b8;">Rp 150.000</span>
+                    </div>
+                    <div class="summary-row" style="font-weight: bold; color: #000;">
+                        <span></span>
+                        <span>Rp 35.000</span>
+                    </div>
 
-                <div class="coupon-container">
-                    <span class="coupon-label">Kode Kupon (Jika ada)</span>
-                    <div class="coupon-row">
-                        <input type="text" class="coupon-field" value="Masukkan kode kupon [min.5 karakter]" readonly>
-                        <button type="button" class="coupon-btn">Terapkan</button>
+                    <div class="summary-row" style="margin-top: 8px;">
+                        <span>Subtotal</span>
+                        <span>Rp 35.000</span>
+                    </div>
+                    
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span>Rp 35.000</span>
+                    </div>
+
+                    <div class="coupon-container">
+                        <span class="coupon-label">Kode Kupon (Jika ada)</span>
+                        <div class="coupon-row">
+                            <input type="text" class="coupon-field" placeholder="Masukkan kode kupon">
+                            <button type="button" class="coupon-btn">Terapkan</button>
+                        </div>
+                    </div>
+
+                    <div class="payment-section">
+                        <span class="payment-label">Pilih Pembayaran</span>
+                        <div class="payment-option">QRIS / All Payment</div>
                     </div>
                 </div>
-
-                <div class="payment-section">
-                    <span class="payment-label">Pilih Pembayaran</span>
-                    <div class="payment-option">Bank Transfer - BCA</div>
-                </div>
             </div>
+
+            <button type="button" id="submitOrderBtn" class="submit-btn">Buat Pesanan Rp 35.000</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN KEDUA (INVOICE & PEMBAYARAN) -->
+    <div id="invoicePage" class="invoice-page">
+        <button type="button" id="backToMainBtn" class="back-btn">&larr; Kembali ke Halaman Utama</button>
+        
+        <div class="invoice-card">
+            <div class="invoice-header">Menunggu Pembayaran</div>
+            <div class="invoice-desc">
+                Selanjutnya, silahkan transfer sesuai nominal (ada tambahan kode unik untuk memudahkan pengecekan) ke rekening yang tertera di bawah ini :
+            </div>
+
+            <div class="nominal-box">
+                <div style="font-size: 11px; color: #1e3c72; font-weight: bold;">TOTAL YANG HARUS DIBAYAR</div>
+                <div id="displayNominal" class="nominal-value">Rp 35.610</div>
+                <button type="button" id="copyNominalBtn" class="copy-nominal-btn">Salin nominal</button>
+            </div>
+
+            <div class="invoice-detail-row">
+                <span>No Invoice:</span>
+                <strong id="displayInvoice">#ORD-1788660710876-376</strong>
+            </div>
+            <div class="invoice-detail-row">
+                <span>Metode:</span>
+                <strong>QRIS / BANK TRANSFER</strong>
+            </div>
+            <div class="invoice-detail-row">
+                <span>Nama Pemesan:</span>
+                <strong id="invoiceName">-</strong>
+            </div>
+            <div class="invoice-detail-row">
+                <span>WhatsApp:</span>
+                <strong id="invoicePhone">-</strong>
+            </div>
+
+            <button type="button" id="showQrisModalBtn" class="qris-toggle-btn">Lihat Barcode QRIS</button>
+
+            <div style="font-size: 11.5px; color: #334155; margin-top: 15px; text-align: center; line-height: 1.5;">
+                Silahkan transfer senilai <strong id="subTotalText">Rp 35.610</strong> ke Qris.<br>
+                Setelah transfer, Kamu bisa langsung konfirmasi melalui Whatsapp Admin, untuk bisa dilakukan verifikasi pembayaran agar bisa masuk ke Website Mahir Digital.
+            </div>
+
+            <a id="waConfirmBtn" href="#" target="_blank" class="whatsapp-btn">KONFIRMASI PEMBAYARAN VIA WHATSAPP</a>
         </div>
 
-        <button type="button" class="submit-btn">Buat Pesanan Rp 35.000</button>
+        <div style="font-size: 11px; color: #64748b; text-align: center; margin-top: 15px; line-height: 1.5;">
+            Terimakasih sudah menjadi bagian dari Mahir Digital! Semangat belajar & prakteknya, semoga diberi kemudahan dalam menerima ilmu baru ❤️<br><br>
+            <strong>Salam Hangat,</strong><br>
+            Mahir Digital ID<br>
+            <span style="color: #2563eb;">#Ngajarin #Nemenin #Nolongin</span>
+        </div>
+    </div>
+
+</div>
+
+<!-- Overlay QRIS dengan Efek Shutter/Wipe pada Barcode -->
+<div id="qrisOverlay" class="qris-overlay">
+    <div class="qris-modal">
+        <h3 style="margin-top: 0; color: #1e3c72; font-size: 15px;">Scan QRIS Pembayaran</h3>
+        
+        <div class="timer-box-24h">
+            Selesaikan Pembayaran Sebelum:<br>
+            <span id="deadline24hText" style="font-size: 13px;">-</span><br>
+            <span style="font-size: 10px; color: #b91c1c;">(Sisa waktu: <span id="countdown24h">24:00:00</span>)</span>
+        </div>
+
+        <p style="font-size: 11px; color: #475569; margin: 5px 0;">Scan menggunakan m-Banking atau E-Wallet apa saja</p>
+        
+        <div class="qris-info-header">
+            MDproduct<br>
+            NMID : ID1026562376537 A01
+        </div>
+
+        <!-- Bagian Gambar Barcode dengan Efek Shutter/Wipe Terbuka Seperti Dicetak -->
+        <div class="barcode-reveal-wrapper">
+            <img src="https://lh3.googleusercontent.com/d/1P9oU4uHBHX21gWv7qiQoqxa76QrG0bG9=s800" alt="QRIS Code" class="qris-image">
+        </div>
+        
+        <p style="font-size: 11px; color: #dc2626; font-weight: bold; margin: 5px 0;">Nominal: <span id="modalNominalText">Rp 35.610</span></p>
+
+        <button type="button" id="closeQrisModal" class="close-modal">Tutup QRIS</button>
     </div>
 </div>
+
+<script>
+    const mainPage = document.getElementById('mainPage');
+    const invoicePage = document.getElementById('invoicePage');
+    const submitOrderBtn = document.getElementById('submitOrderBtn');
+    const backToMainBtn = document.getElementById('backToMainBtn');
+    
+    const displayNominal = document.getElementById('displayNominal');
+    const subTotalText = document.getElementById('subTotalText');
+    const modalNominalText = document.getElementById('modalNominalText');
+    const displayInvoice = document.getElementById('displayInvoice');
+    const invoiceName = document.getElementById('invoiceName');
+    const invoicePhone = document.getElementById('invoicePhone');
+    
+    const copyNominalBtn = document.getElementById('copyNominalBtn');
+    const showQrisModalBtn = document.getElementById('showQrisModalBtn');
+    const qrisOverlay = document.getElementById('qrisOverlay');
+    const closeQrisModal = document.getElementById('closeQrisModal');
+    const waConfirmBtn = document.getElementById('waConfirmBtn');
+
+    const deadline24hText = document.getElementById('deadline24hText');
+    const countdown24h = document.getElementById('countdown24h');
+
+    const finalAmount = "Rp 35.610";
+    const invoiceNum = "#ORD-1788660710876-376";
+
+    let countdownInterval;
+
+    function start24HourTimer() {
+        const targetTime = new Date().getTime() + (24 * 60 * 60 * 1000);
+
+        const deadlineDate = new Date(targetTime);
+        const day = String(deadlineDate.getDate()).padStart(2, '0');
+        const month = String(deadlineDate.getMonth() + 1).padStart(2, '0');
+        const year = deadlineDate.getFullYear();
+        const hours = String(deadlineDate.getHours()).padStart(2, '0');
+        const minutes = String(deadlineDate.getMinutes()).padStart(2, '0');
+        const seconds = String(deadlineDate.getSeconds()).padStart(2, '0');
+
+        deadline24hText.textContent = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+
+        clearInterval(countdownInterval);
+        countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetTime - now;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                countdown24h.textContent = "Waktu Habis";
+                return;
+            }
+
+            const hrs = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdown24h.textContent = 
+                String(hrs).padStart(2, '0') + ":" + 
+                String(mins).padStart(2, '0') + ":" + 
+                String(secs).padStart(2, '0');
+        }, 1000);
+    }
+
+    submitOrderBtn.addEventListener('click', function () {
+        const name = document.getElementById('inputName').value.trim();
+        const email = document.getElementById('inputEmail').value.trim();
+        const phone = document.getElementById('inputPhone').value.trim();
+
+        if (!name || !email || !phone) {
+            alert('Mohon lengkapi Nama Lengkap, Alamat Email, dan No. Whatsapp terlebih dahulu!');
+            return;
+        }
+
+        invoiceName.textContent = name;
+        invoicePhone.textContent = phone;
+        displayInvoice.textContent = invoiceNum;
+        displayNominal.textContent = finalAmount;
+        subTotalText.textContent = finalAmount;
+        modalNominalText.textContent = finalAmount;
+
+        const adminNumber = '6283185706741';
+        const message = `Halo Admin Mahir Digital, saya ingin konfirmasi pembayaran webinar.%0A%0A*DETAIL PESANAN:*%0A- No Invoice: ${invoiceNum}%0A- Total Transfer: ${finalAmount}%0A- Metode: QRIS / Bank Transfer%0A%0A*DATA PENDAFTAR:*%0A- Nama: ${encodeURIComponent(name)}%0A- Email: ${encodeURIComponent(email)}%0A- WhatsApp: ${encodeURIComponent(phone)}%0A%0ABerikut saya lampirkan bukti transfernya. Terima kasih.`;
+
+        waConfirmBtn.href = `https://wa.me/${adminNumber}?text=${message}`;
+
+        mainPage.style.display = 'none';
+        invoicePage.style.display = 'block';
+        window.scrollTo(0, 0);
+    });
+
+    backToMainBtn.addEventListener('click', function () {
+        invoicePage.style.display = 'none';
+        mainPage.style.display = 'block';
+        window.scrollTo(0, 0);
+    });
+
+    copyNominalBtn.addEventListener('click', function () {
+        navigator.clipboard.writeText("35610").then(() => {
+            copyNominalBtn.textContent = "Berhasil Disalin!";
+            setTimeout(() => {
+                copyNominalBtn.textContent = "Salin nominal";
+            }, 2000);
+        });
+    });
+
+    showQrisModalBtn.addEventListener('click', function () {
+        qrisOverlay.style.display = 'flex';
+        setTimeout(() => {
+            qrisOverlay.classList.add('show');
+        }, 10);
+        start24HourTimer();
+    });
+
+   <script>
+    // Contoh kode di dalam tag <script> website Anda
+    
+    function closeQris() {
+        // 1. Ambil data dari form yang diisi pengguna di website
+        const formData = {
+            name: document.getElementById('inputName').value.trim(),
+            email: document.getElementById('inputEmail').value.trim(),
+            phone: document.getElementById('inputPhone').value.trim(),
+            nominal: finalAmount,   // Pastikan variabel nominal/finalAmount sesuai di kode Anda
+            invoice: invoiceNum     // Pastikan variabel nomor invoice sesuai di kode Anda
+        };
+
+        // 2. URL Web App Google Apps Script Anda (Sudah dimasukkan di sini)
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxf5pTQQ2JtIcKeMsXCcD_n9Avcl1bjaG5xQD3l87C0VFlZualDLIJ_DrRFy0snrmOwyg/exec';
+
+        // 3. Kirim data secara otomatis ke Google Spreadsheet & Email tanpa mengganggu tampilan
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+        .then(() => {
+            console.log('Data berhasil dikirim ke Spreadsheet & Email!');
+        })
+        .catch(error => console.error('Error!', error.message));
+
+        // 4. Proses bawaan website untuk menutup modal QRIS
+        qrisOverlay.classList.remove('show');
+        setTimeout(() => {
+            qrisOverlay.style.display = 'none';
+        }, 300);
+        clearInterval(countdownInterval);
+    }
+</script>
 
 </body>
 </html>
