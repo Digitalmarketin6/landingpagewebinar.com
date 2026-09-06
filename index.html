@@ -722,33 +722,48 @@
         }, 1000);
     }
 
-    submitOrderBtn.addEventListener('click', function () {
-        const name = document.getElementById('inputName').value.trim();
-        const email = document.getElementById('inputEmail').value.trim();
-        const phone = document.getElementById('inputPhone').value.trim();
+   submitOrderBtn.addEventListener('click', function () {
+    const name = document.getElementById('inputName').value.trim();
+    const email = document.getElementById('inputEmail').value.trim();
+    const phone = document.getElementById('inputPhone').value.trim();
 
-        if (!name || !email || !phone) {
-            alert('Mohon lengkapi Nama Lengkap, Alamat Email, dan No. Whatsapp terlebih dahulu!');
-            return;
-        }
+    if (!name || !email || !phone) {
+        alert('Mohon lengkapi Nama Lengkap, Alamat Email, dan No. Whatsapp terlebih dahulu!');
+        return;
+    }
 
-        invoiceName.textContent = name;
-        invoicePhone.textContent = phone;
-        displayInvoice.textContent = invoiceNum;
-        displayNominal.textContent = finalAmount;
-        subTotalText.textContent = finalAmount;
-        modalNominalText.textContent = finalAmount;
+    // Menampilkan data ke elemen invoice/halaman ringkasan
+    invoiceName.textContent = name;
+    invoicePhone.textContent = phone;
+    displayInvoice.textContent = invoiceNum;
+    displayNominal.textContent = finalAmount;
+    subTotalText.textContent = finalAmount;
+    modalNominalText.textContent = finalAmount;
 
-        const adminNumber = '6283185706741';
-        const message = `Halo Admin Mahir Digital, saya ingin konfirmasi pembayaran webinar.%0A%0A*DETAIL PESANAN:*%0A- No Invoice: ${invoiceNum}%0A- Total Transfer: ${finalAmount}%0A- Metode: QRIS / Bank Transfer%0A%0A*DATA PENDAFTAR:*%0A- Nama: ${encodeURIComponent(name)}%0A- Email: ${encodeURIComponent(email)}%0A- WhatsApp: ${encodeURIComponent(phone)}%0A%0ABerikut saya lampirkan bukti transfernya. Terima kasih.`;
+    // Nomor WhatsApp admin yang benar (menggunakan nomor Anda)
+    const adminNumber = '6283185706741'; 
 
-        waConfirmBtn.href = `https://wa.me/${adminNumber}?text=${message}`;
+    // Menyusun teks pesan dengan rapi
+    const message = 
+        `Halo Admin Mahir Digital, saya ingin konfirmasi pembayaran webinar.\n\n` +
+        `*DETAIL PESANAN:*\n` +
+        `- No Invoice: ${invoiceNum}\n` +
+        `- Total Transfer: ${finalAmount}\n` +
+        `- Metode: QRIS / Bank Transfer\n\n` +
+        `*DATA PENDAFTAR:*\n` +
+        `- Nama: ${name}\n` +
+        `- Email: ${email}\n` +
+        `- WhatsApp: ${phone}\n\n` +
+        `Berikut saya lampirkan bukti transfernya. Terima kasih.`;
 
-        mainPage.style.display = 'none';
-        invoicePage.style.display = 'block';
-        window.scrollTo(0, 0);
-    });
+    // Mengubah seluruh teks pesan ke format URL yang aman menggunakan encodeURIComponent
+    waConfirmBtn.href = `https://wa.me/${adminNumber}?text=` + encodeURIComponent(message);
 
+    // Berpindah halaman/tampilan
+    mainPage.style.display = 'none';
+    invoicePage.style.display = 'block';
+    window.scrollTo(0, 0);
+});
     backToMainBtn.addEventListener('click', function () {
         invoicePage.style.display = 'none';
         mainPage.style.display = 'block';
